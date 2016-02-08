@@ -10,9 +10,14 @@
 !build.properties
 !DOCS/
 
-# include markdowns
+# include miscellaneous files
 !README.md
-!License.md
+!LICNESE.txt
+
+# inclde libs which don't have a maven repo
+!libs/
+# ignore sources
+**/*-soruces.jar
 
 # inclde libs which don't have a maven repo
 !libs/
