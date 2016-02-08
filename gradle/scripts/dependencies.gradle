@@ -1,0 +1,36 @@
+repositories {
+
+    maven {
+        name 'CB Maven FS'
+        url "http://chickenbones.net/maven/"
+    }
+
+    maven {
+        name "FireBall API Depot"
+        url "http://dl.tsr.me/artifactory/libs-release-local"
+    }
+	
+	maven { 
+		name 'IC2 Maven'
+		url = "http://maven.ic2.player.to"
+	}
+	
+	ivy {
+		name "CoFHCore"
+		artifactPattern "http://addons.cursecdn.com/files/2212/895/[module]-[revision].[ext]"
+	}
+}
+
+dependencies {
+	compile fileTree ( dir: "libs" , include: '*-dev.jar' )
+	
+	compile "appeng:appliedenergistics2:rv${config.ae_rv}-${config.ae_channel}-${config.ae_build}:dev"
+    // compile "codechicken:ForgeMultipart:${config.minecraft_version}-${config.fmp_version}:dev"
+    compile "codechicken:CodeChickenLib:${config.minecraft_version}-${config.code_chicken_lib_version}:dev"
+    compile "codechicken:CodeChickenCore:${config.minecraft_version}-${config.code_chicken_core_version}:dev"
+    compile "codechicken:NotEnoughItems:${config.minecraft_version}-${config.nei_version}:dev"
+    compile "com.mod-buildcraft:buildcraft:${config.bc_version}:dev"
+	compile "net.industrial-craft:industrialcraft-2:${config.ic2_version}-experimental:dev"
+
+    testCompile "junit:junit:4.11"
+}

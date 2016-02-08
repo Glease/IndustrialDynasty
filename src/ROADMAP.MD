@@ -1,0 +1,1 @@
+Drop java pre-1.8 support on the second release. 

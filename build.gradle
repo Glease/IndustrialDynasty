@@ -1,0 +1,102 @@
+buildscript {
+    repositories {
+        mavenCentral()
+		
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+    }
+}
+
+apply plugin: 'forge'
+
+apply from: 'gradle/scripts/propertyloader.gradle'
+//apply from: 'gradle/scripts/dependencies.gradle'
+//apply from: 'gradle/scripts/autoinstallruntime.gradle'
+
+version = config.pjtstatus + "-" + config.version + "-" + config.build
+group = config.group + config.archivesBaseName
+archivesBaseName = config.archivesBaseName
+
+// If TeamCity is running this build, lets set the version info
+if (hasProperty("teamcity")) {
+    version = teamcity["build.number"]
+
+    // Fix for main branch being built
+    version = version.replaceAll("/", "-")
+}
+
+minecraft {
+    version = config.minecraft_version + "-" + config.forge_version
+
+    replace "@version@", project.version
+    replace "@pjtstatus@", config.pjtstatus
+
+	setVersion config.minecraft_version + "-" + config.forge_version
+	
+    // used when launching minecraft in dev env
+    runDir = "run"
+}
+
+sourceSets {
+    main {
+        java {
+            //srcDirs += 'src/api/java'
+            srcDirs += 'src/main/java/'
+        }
+
+        resources {
+            srcDir "src/main/resources/"
+        }
+    }
+}
+
+processResources
+{
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+                
+        // replace version and mcversion
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+}
+
+
+
+runClient {
+	if (project.hasProperty('mcUsername')) {
+		args "--username=" + project.mcUsername
+	}
+	if (project.hasProperty('mcPassword')) {
+		args "--password=" + project.mcPassword
+	}
+}
+
+debugClient {
+	if (project.hasProperty('mcUsername')) {
+		args "--username=" + project.mcUsername
+	}
+	if (project.hasProperty('mcPassword')) {
+		args "--password=" + project.mcPassword
+	}
+}
+
+task echoVersion << {
+	printNextVersion()
+}
+
+def printNextVersion() {
+	println '*************************************************************'
+	println 'The next build will be version: ' +  project.version
+	println '*************************************************************'
+}
