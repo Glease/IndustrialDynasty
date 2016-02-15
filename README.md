@@ -4,7 +4,7 @@ IndustrialDynasty is a tech-focused Minecraft Mod based on the Forge API.
 ## Contributing
 - For bug fixes, just send in pull requests.
 - For new features, make sure to add an issue before you start, since I may reject it for various reasons.
-
+- For localization, make sure to keep th English/Simplifid Chinese record if you don't understand it,fo others' convenience
 ## Feature request
 Goto [Github Issue Tracker](https://github.com/glease/IndustrialDynasty/issues) and post a new issue.
 
